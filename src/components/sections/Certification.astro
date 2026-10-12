@@ -54,6 +54,8 @@ const copy = t.certification;
 <style>
   .certification {
     padding-block: var(--space-9);
+    /* Its stamp waits at 1.7× scale before it thumps in (scripts/motion.ts) and would widen the page. */
+    overflow-x: clip;
   }
   .layout {
     display: grid;

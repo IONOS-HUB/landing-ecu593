@@ -90,6 +90,8 @@ const copy = t.form;
     background-image: var(--guilloche-band);
     background-size: 240px 96px;
     border-top: 1.5px solid var(--paper-edge);
+    /* The hidden "received" stamp waits at 1.7× scale and would widen the page on phones. */
+    overflow-x: clip;
   }
   .layout {
     display: grid;
