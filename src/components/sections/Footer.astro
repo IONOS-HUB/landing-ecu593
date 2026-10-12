@@ -10,6 +10,12 @@ import Value from '../ui/Value.astro';
 const t = useDictionary(Astro.currentLocale);
 const socials = site.social.filter((link) => showPending || !isPending(link.url));
 const year = new Date().getFullYear();
+
+/** On pages other than the landing, pass home="/" so in-page anchors point back to the landing. */
+interface Props {
+  home?: string;
+}
+const { home = '' } = Astro.props;
 ---
 
 <footer class="back-cover">
@@ -17,7 +23,7 @@ const year = new Date().getFullYear();
     <div class="closing">
       <h2 data-closing-title>{t.footer.closing}</h2>
       <div class="actions">
-        <Button href="#solicitud">{t.footer.ctaPrimary}</Button>
+        <Button href={`${home}#solicitud`}>{t.footer.ctaPrimary}</Button>
         <Button href={buildWhatsAppUrl(t.whatsapp.greeting)} variant="whatsapp" external>{t.footer.ctaWhatsapp}</Button>
       </div>
     </div>
@@ -47,6 +53,16 @@ const year = new Date().getFullYear();
               <Value value={site.officeHours} />
             </li>
           )}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="data-label">{t.footer.guides}</h3>
+        <ul>
+          <li>
+            <Icon name="arrow-right" size={18} />
+            <a href="/blog/">{t.footer.blog}</a>
+          </li>
         </ul>
       </div>
 

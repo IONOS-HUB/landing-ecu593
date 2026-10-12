@@ -89,6 +89,8 @@ const stampRotations = [14, -10, 8, -12];
 <style>
   .programs {
     padding-block: var(--space-9);
+    /* Visa stamps wait at 1.7× scale before they thump in (scripts/motion.ts) and would widen the page. */
+    overflow-x: clip;
   }
   .visas {
     list-style: none;

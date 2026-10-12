@@ -11,6 +11,12 @@ import Stamp from './ui/Stamp.astro';
 
 const t = useDictionary(Astro.currentLocale);
 const copy = t.campaign;
+
+/** On pages other than the landing, pass home="/" so in-page anchors point back to the landing. */
+interface Props {
+  home?: string;
+}
+const { home = '' } = Astro.props;
 ---
 
 {
@@ -30,7 +36,7 @@ const copy = t.campaign;
         <h2 id="campaign-dialog-title">{copy.dialog.title}</h2>
         <p>{copy.dialog.body}</p>
         <div class="actions">
-          <Button href="#solicitud" data-campaign-go="">{copy.dialog.cta}</Button>
+          <Button href={`${home}#solicitud`} data-campaign-go="">{copy.dialog.cta}</Button>
           <button class="later" value="dismiss">{copy.dialog.dismiss}</button>
         </div>
       </form>

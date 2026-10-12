@@ -25,10 +25,10 @@ Fuente de lo ya completado: formulario del cliente del 05-10-2026 (Carlos Ismael
 - [ ] Favicon: hoy se genera desde el logo (`public/favicon.png`)
 
 ## Entorno — `.env` (ver `.env.example`)
-- [ ] `PUBLIC_SITE_URL`: dominio de producción. Sin él no hay URLs absolutas en canonical/hreflang/Open Graph ni sitemap. El cliente no indicó si ya tiene dominio
+- [ ] `PUBLIC_SITE_URL`: dominio de producción. **Crítico para el SEO**: sin él no hay URLs absolutas en canonical/hreflang/Open Graph ni sitemap. El cliente no indicó si ya tiene dominio. Los demás pasos manuales de SEO (Search Console, Bing, Perfil de Empresa en Google, reseñas) están en [SEO.md](SEO.md#3-pasos-manuales-nadie-más-puede-hacerlo)
 
 ## Formulario — webhook n8n `correos-ecu593`
-- [ ] Probar un envío real de punta a punta (llega el correo a ecu593english@gmail.com). El formulario envía `name`, `email`, `phone`, `program`, `campaign`, `source`, `lang` y `page` como `application/x-www-form-urlencoded`
+- [ ] Probar un envío real de punta a punta (llega el correo a ecu593english@gmail.com). El formulario envía `name`, `email`, `phone`, `program`, `campaign`, `source`, `lang`, `page` y `referrer` como `application/x-www-form-urlencoded`
 - [ ] (Opcional) Activar CORS en el nodo Webhook de n8n (*Allowed Origins* con el dominio de la landing). Hoy el preflight `OPTIONS` responde 500, por eso el formulario usa `mode: 'no-cors'` y no puede leer la respuesta: solo detecta errores de red, no un fallo dentro de n8n
 
 ## Programas — `programs.items.*.duration` en `src/i18n/es.ts` y `en.ts`

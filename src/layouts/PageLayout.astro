@@ -1,0 +1,27 @@
+---
+/**
+ * Shell for pages other than the landing (blog): same nav, footer, campaign and WhatsApp button,
+ * with in-page anchors pointing back to the landing ("/#solicitud").
+ */
+import BaseLayout from './BaseLayout.astro';
+import CampaignBar from '../components/CampaignBar.astro';
+import CampaignDialog from '../components/CampaignDialog.astro';
+import Footer from '../components/sections/Footer.astro';
+import Nav from '../components/sections/Nav.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+
+type Props = import('./BaseLayout.astro').Props;
+const { seo } = Astro.props;
+---
+
+<BaseLayout seo={seo}>
+  <slot name="head" slot="head" />
+  <CampaignBar home="/" />
+  <Nav home="/" />
+  <main id="contenido">
+    <slot />
+  </main>
+  <Footer home="/" />
+  <WhatsAppFab />
+  <CampaignDialog home="/" />
+</BaseLayout>

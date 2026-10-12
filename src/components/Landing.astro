@@ -1,6 +1,8 @@
 ---
 /** The full landing, shared by every language route (src/pages/index.astro, src/pages/en/index.astro). */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import StructuredData from './seo/StructuredData.astro';
+import BlogTeaser from './sections/BlogTeaser.astro';
 import Nav from './sections/Nav.astro';
 import Hero from './sections/Hero.astro';
 import Programs from './sections/Programs.astro';
@@ -19,6 +21,7 @@ import CampaignDialog from './CampaignDialog.astro';
 ---
 
 <BaseLayout>
+  <StructuredData slot="head" />
   <CampaignBar />
   <Nav />
   <main id="contenido">
@@ -30,6 +33,7 @@ import CampaignDialog from './CampaignDialog.astro';
     <Endorsements />
     <Testimonials />
     <Pricing />
+    <BlogTeaser />
     <Faq />
     <LeadForm />
   </main>

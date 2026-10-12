@@ -1,0 +1,386 @@
+---
+import { render } from 'astro:content';
+import { site } from '../../config/site';
+import { useDictionary } from '../../i18n';
+import PageLayout from '../../layouts/PageLayout.astro';
+import { formatDate, getPosts, lastModified, postPath, readingMinutes, type Post } from '../../lib/blog';
+import { breadcrumbNode, faqNode, organizationNode, schemaUrls, toJsonLd, websiteNode } from '../../lib/schema';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import Stamp from '../../components/ui/Stamp.astro';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } }));
+}
+
+interface Props {
+  post: Post;
+  posts: Post[];
+}
+
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const t = useDictionary('es');
+const copy = t.blog;
+const data = post.data;
+const path = postPath(post);
+const modified = lastModified(post);
+const minutes = readingMinutes(post);
+const related = posts.filter((other) => other.id !== post.id).slice(0, 2);
+
+const base = Astro.site;
+const { absolute, orgId, websiteId } = schemaUrls(base);
+const url = absolute(path);
+
+const json = toJsonLd([
+  organizationNode(base, t),
+  websiteNode(base),
+  {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    headline: data.title,
+    description: data.description,
+    abstract: data.answer,
+    keywords: data.keyword,
+    inLanguage: 'es-EC',
+    datePublished: data.publishedAt.toISOString(),
+    dateModified: modified.toISOString(),
+    wordCount: (post.body ?? '').split(/\s+/).length,
+    timeRequired: `PT${minutes}M`,
+    image: absolute(site.ogImage.src),
+    author: { '@type': 'Organization', name: copy.author, url: base ? base.href : undefined, parentOrganization: { '@id': orgId } },
+    publisher: { '@id': orgId },
+    isPartOf: [{ '@id': `${absolute('/blog/')}#blog` }, { '@id': websiteId }],
+    citation: data.sources.map((source) => ({ '@type': 'CreativeWork', name: source.title, url: source.url })),
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.answer p'] },
+  },
+  breadcrumbNode(base, [
+    { name: copy.home, path: '/' },
+    { name: 'Blog', path: '/blog/' },
+    { name: data.title, path },
+  ]),
+  ...(data.faq.length > 0 ? [faqNode(`${url}#faq`, 'es-EC', data.faq)] : []),
+]);
+---
+
+<PageLayout
+  seo={{
+    title: `${data.title} | Ecu593`,
+    description: data.description,
+    path,
+    type: 'article',
+    publishedTime: data.publishedAt,
+    modifiedTime: modified,
+  }}
+>
+  <script slot="head" type="application/ld+json" set:html={json} />
+
+  <article class="article">
+    <header class="article-head">
+      <div class="container narrow">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">{copy.home}</a> <span aria-hidden="true">/</span> <a href="/blog/">Blog</a>
+        </nav>
+        <h1>{data.title}</h1>
+        <p class="meta">
+          {copy.published} <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time>
+          {
+            data.updatedAt && (
+              <>
+                {' '}· {copy.updated} <time datetime={data.updatedAt.toISOString()}>{formatDate(data.updatedAt)}</time>
+              </>
+            )
+          }
+          {' '}· {copy.readingTime(minutes)} · {copy.author}
+        </p>
+      </div>
+    </header>
+
+    <div class="paper body-wrap">
+      <div class="container narrow">
+        <aside class="answer" aria-labelledby="respuesta-rapida">
+          <h2 id="respuesta-rapida" class="data-label">{copy.answer}</h2>
+          <p>{data.answer}</p>
+        </aside>
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        {
+          data.faq.length > 0 && (
+            <section class="faq" aria-labelledby="faq-title">
+              <h2 id="faq-title">{copy.faq}</h2>
+              {data.faq.map((item) => (
+                <details>
+                  <summary>
+                    {item.question}
+                    <Icon name="plus" size={20} class="toggle" />
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </section>
+          )
+        }
+
+        <aside class="cta">
+          <Stamp class="cta-stamp" top="Ecu593 English" main="B2" bottom="12 + 1" ink="flame" rotate={-12} size="7rem" />
+          <h2>{copy.ctaTitle}</h2>
+          <p>{copy.ctaBody}</p>
+          <div class="cta-actions">
+            <Button href="/#solicitud">{copy.ctaButton}</Button>
+            <a href="/#mes-13">{t.method.bonus.link}</a>
+          </div>
+        </aside>
+
+        {
+          data.sources.length > 0 && (
+            <section class="sources" aria-labelledby="sources-title">
+              <h2 id="sources-title" class="data-label">{copy.sources}</h2>
+              <ol>
+                {data.sources.map((source) => (
+                  <li>
+                    <a href={source.url} target="_blank" rel="noopener">{source.title}</a>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        {
+          related.length > 0 && (
+            <nav class="related" aria-labelledby="related-title">
+              <h2 id="related-title" class="data-label">{copy.related}</h2>
+              <ul>
+                {related.map((other) => (
+                  <li>
+                    <a href={postPath(other)}>{other.data.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  .narrow {
+    width: min(100% - 2 * var(--gutter), 46rem);
+  }
+  .article-head {
+    padding-block: var(--space-8) var(--space-7);
+    background:
+      var(--rosette-cover) right -18rem top -14rem / 50rem no-repeat,
+      radial-gradient(120% 90% at 50% 0%, var(--navy-800), var(--navy-900) 60%, var(--navy-950));
+    color: var(--on-navy);
+  }
+  .crumbs {
+    font-size: 0.875rem;
+    color: var(--on-navy-soft);
+  }
+  .crumbs a {
+    color: var(--on-navy);
+  }
+  h1 {
+    margin-top: var(--space-4);
+    font-size: var(--step-3);
+  }
+  .meta {
+    margin-top: var(--space-4);
+    font-size: 0.875rem;
+    color: var(--on-navy-soft);
+  }
+  .body-wrap {
+    padding-block: var(--space-7) var(--space-9);
+    /* The CTA stamp waits at 1.7× scale before it thumps in and would widen the page. */
+    overflow-x: clip;
+  }
+
+  .answer {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border-radius: 10px;
+    background: #fbe9a8;
+    box-shadow: inset 0 0 0 2px var(--sun-deep);
+  }
+  .answer .data-label {
+    color: var(--navy-900);
+    font-weight: 700;
+  }
+  .answer p {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* Markdown body */
+  .prose {
+    margin-top: var(--space-7);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+  .prose :global(> * + *) {
+    margin-top: var(--space-4);
+  }
+  .prose :global(h2) {
+    margin-top: var(--space-7);
+    font-size: var(--step-2);
+    color: var(--navy-900);
+  }
+  .prose :global(h3) {
+    margin-top: var(--space-6);
+    font-size: var(--step-1);
+    color: var(--navy-900);
+  }
+  .prose :global(a) {
+    color: var(--sky-text);
+    font-weight: 600;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.4em;
+  }
+  .prose :global(li + li) {
+    margin-top: var(--space-2);
+  }
+  .prose :global(strong) {
+    color: var(--navy-900);
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1.5px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose :global(th) {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .prose :global(blockquote) {
+    margin-inline: 0;
+    padding-left: var(--space-4);
+    border-left: 4px solid var(--sun);
+    color: var(--ink-soft);
+  }
+
+  .faq {
+    margin-top: var(--space-8);
+    border-top: 2px solid var(--navy-900);
+  }
+  .faq h2 {
+    padding-block: var(--space-5) var(--space-3);
+    font-size: var(--step-2);
+    color: var(--navy-900);
+  }
+  details {
+    border-bottom: 1.5px solid var(--rule);
+  }
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary :global(.toggle) {
+    flex: none;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  details[open] summary :global(.toggle) {
+    transform: rotate(45deg);
+  }
+  details p {
+    padding-bottom: var(--space-4);
+    color: var(--ink-soft);
+  }
+
+  .cta {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    margin-top: var(--space-8);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: var(--radius-page);
+    background:
+      var(--rosette-cover) right -10rem bottom -12rem / 30rem no-repeat,
+      var(--navy-900);
+    color: var(--on-navy);
+    box-shadow: var(--shadow-page);
+  }
+  .cta h2 {
+    font-size: var(--step-2);
+    color: var(--sun);
+    max-width: 16ch;
+  }
+  .cta p {
+    color: var(--on-navy-soft);
+    max-width: 34rem;
+  }
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .cta-actions > a {
+    color: var(--on-navy);
+    font-weight: 700;
+  }
+  .cta :global(.cta-stamp) {
+    position: absolute;
+    right: 1rem;
+    top: -2.5rem;
+    mix-blend-mode: normal;
+  }
+
+  .sources,
+  .related {
+    margin-top: var(--space-7);
+  }
+  .sources ol,
+  .related ul {
+    margin: var(--space-3) 0 0;
+    padding-left: 1.2em;
+    font-size: 0.9375rem;
+  }
+  .sources li + li,
+  .related li + li {
+    margin-top: var(--space-2);
+  }
+  .sources a,
+  .related a {
+    color: var(--sky-text);
+    overflow-wrap: anywhere;
+  }
+  .related a {
+    font-weight: 700;
+  }
+</style>

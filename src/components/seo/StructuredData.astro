@@ -1,48 +1,73 @@
 ---
 /**
- * schema.org JSON-LD for search engines and answer engines (AEO).
- * Only confirmed facts are emitted: pending() values are skipped, never guessed.
+ * schema.org JSON-LD for the landing: organization, website, page, one Course per program and the FAQ.
+ * The regular course carries the full Course info set (offer, schedule, workload, credential) because
+ * it is the only program whose facts are all confirmed. Pending values are skipped, never guessed.
  */
 import { site } from '../../config/site';
 import { programs } from '../../data/programs';
-import { COURSE_MONTHS } from '../../data/pricing';
+import { FINAL_CEFR, LEVEL_COUNT, WEEKS_PER_LEVEL } from '../../data/method';
+import { COURSE_MONTHS, MONTHLY_FEE } from '../../data/pricing';
 import { localeMeta, localePath, toLocale, useDictionary } from '../../i18n';
 import { isPending } from '../../lib/pending';
+import { faqNode, organizationNode, schemaUrls, toJsonLd, websiteNode } from '../../lib/schema';
 
 const locale = toLocale(Astro.currentLocale);
 const t = useDictionary(locale);
 const base = Astro.site;
-
-const absolute = (path: string) => (base ? new URL(path, base).href : path);
+const { absolute, orgId, websiteId } = schemaUrls(base);
 const pageUrl = absolute(localePath(locale));
-const orgId = absolute('/#organization');
-const websiteId = absolute('/#website');
-const known = <T,>(value: T) => (isPending(value) ? undefined : value);
+const htmlLang = localeMeta[locale].htmlLang;
 
-const sameAs = site.social.map((link) => known(link.url)).filter(Boolean);
+/** Both schedules add up to 5 hours a week: 1 h Monday–Friday, or 5 h on Saturday. */
+const WEEKLY_HOURS = 5;
+const totalWeeks = LEVEL_COUNT * WEEKS_PER_LEVEL;
 
-const organization = {
-  '@type': 'EducationalOrganization',
-  '@id': orgId,
-  name: site.name,
-  alternateName: site.legalName,
-  url: base ? base.href : undefined,
-  logo: absolute(site.logo.src),
-  image: absolute(site.ogImage.src),
-  slogan: site.slogan.join(' · '),
-  description: t.meta.description,
-  areaServed: { '@type': 'Country', name: 'Ecuador' },
-  knowsLanguage: ['es', 'en'],
-  email: known(site.email),
-  telephone: `+${site.whatsapp.number}`,
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'admissions',
-    telephone: `+${site.whatsapp.number}`,
-    url: `https://wa.me/${site.whatsapp.number}`,
-    availableLanguage: ['Spanish', 'English'],
-  },
-  sameAs: sameAs.length > 0 ? sameAs : undefined,
+const regularDetails = {
+  timeRequired: `P${COURSE_MONTHS}M`,
+  educationalLevel: `A1–${FINAL_CEFR} (MCER)`,
+  coursePrerequisites: t.programs.items.regular.audience,
+  educationalCredentialAwarded: t.certification.benefits[0].title,
+  numberOfCredits: undefined,
+  offers: [
+    {
+      '@type': 'Offer',
+      category: 'Subscription',
+      price: MONTHLY_FEE,
+      priceCurrency: 'USD',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: MONTHLY_FEE,
+        priceCurrency: 'USD',
+        unitCode: 'MON',
+        unitText: locale === 'es' ? 'mes' : 'month',
+      },
+      availability: 'https://schema.org/InStock',
+      eligibleRegion: { '@type': 'Country', name: 'Ecuador' },
+      url: `${pageUrl}#valores`,
+      description: t.pricing.note,
+    },
+  ],
+  hasCourseInstance: [
+    {
+      '@type': 'CourseInstance',
+      name: t.modalities.items.online.details[0].label,
+      courseMode: 'Online',
+      courseWorkload: `PT${WEEKLY_HOURS}H`,
+      courseSchedule: { '@type': 'Schedule', duration: 'PT1H', repeatFrequency: 'Daily', byDay: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], repeatCount: totalWeeks * 5 },
+      inLanguage: 'en',
+      location: { '@type': 'VirtualLocation', url: pageUrl },
+    },
+    {
+      '@type': 'CourseInstance',
+      name: t.modalities.items.online.details[1].label,
+      courseMode: 'Online',
+      courseWorkload: `PT${WEEKLY_HOURS}H`,
+      courseSchedule: { '@type': 'Schedule', duration: `PT${WEEKLY_HOURS}H`, repeatFrequency: 'Weekly', byDay: 'Saturday', repeatCount: totalWeeks },
+      inLanguage: 'en',
+      location: { '@type': 'VirtualLocation', url: pageUrl },
+    },
+  ],
 };
 
 const courses = programs.map((program) => {
@@ -50,58 +75,42 @@ const courses = programs.map((program) => {
   return {
     '@type': 'Course',
     '@id': `${pageUrl}#course-${program.id}`,
-    name: `${t.programs.band} ${item.name} · ${site.name}`,
+    name: `${item.name} · ${site.name}`,
     description: item.pitch,
+    url: `${pageUrl}#programas`,
     provider: { '@id': orgId },
     inLanguage: 'en',
+    availableLanguage: ['en', 'es'],
     teaches: item.focus,
-    timeRequired: program.id === 'regular' ? `P${COURSE_MONTHS}M` : undefined,
-    educationalCredentialAwarded: program.id === 'regular' ? t.certification.benefits[0].title : undefined,
     audience: { '@type': 'EducationalAudience', audienceType: item.audience },
-    hasCourseInstance: [{ '@type': 'CourseInstance', courseMode: 'Online' }],
+    ...(program.id === 'regular'
+      ? regularDetails
+      : { hasCourseInstance: [{ '@type': 'CourseInstance', courseMode: 'Online' }] }),
   };
 });
 
-const answered = t.faq.items.filter((faq) => !isPending(faq.answer));
+const answered = t.faq.items.filter((faq) => !isPending(faq.answer)) as { question: string; answer: string }[];
 
-const graph = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    organization,
-    {
-      '@type': 'WebSite',
-      '@id': websiteId,
-      url: base ? base.href : undefined,
-      name: site.name,
-      inLanguage: Object.values(localeMeta).map((meta) => meta.htmlLang),
-      publisher: { '@id': orgId },
-    },
-    {
-      '@type': 'WebPage',
-      '@id': `${pageUrl}#webpage`,
-      url: pageUrl,
-      name: t.meta.title,
-      description: t.meta.description,
-      inLanguage: localeMeta[locale].htmlLang,
-      isPartOf: { '@id': websiteId },
-      about: { '@id': orgId },
-      primaryImageOfPage: absolute(site.ogImage.src),
-    },
-    ...courses,
-    {
-      '@type': 'FAQPage',
-      '@id': `${pageUrl}#faq`,
-      inLanguage: localeMeta[locale].htmlLang,
-      mainEntity: answered.map((faq) => ({
-        '@type': 'Question',
-        name: faq.question,
-        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-      })),
-    },
-  ],
-};
-
-const json = JSON.stringify(graph).replace(/</g, '\\u003c');
+const json = toJsonLd([
+  organizationNode(base, t),
+  websiteNode(base),
+  {
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: t.meta.title,
+    description: t.meta.description,
+    inLanguage: htmlLang,
+    isPartOf: { '@id': websiteId },
+    about: { '@id': orgId },
+    primaryImageOfPage: absolute(site.ogImage.src),
+    mainEntity: { '@id': `${pageUrl}#course-regular` },
+    // Short answers that voice assistants and answer engines can read aloud.
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['#hero-title', '.cover .sub', '#mes-13'] },
+  },
+  ...courses,
+  faqNode(`${pageUrl}#faq`, htmlLang, answered),
+]);
 ---
 
 <script type="application/ld+json" set:html={json} />

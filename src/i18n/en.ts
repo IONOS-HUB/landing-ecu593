@@ -5,8 +5,8 @@ import type { Dictionary } from './types';
 
 const en: Dictionary = {
   meta: {
-    title: `Ecu593 English | ${FINAL_CEFR} English in ${LEVEL_COUNT} months + free Cambridge preparation`,
-    description: `100% online English school in Ecuador. The ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} program: ${LEVEL_COUNT} months of live classes to reach ${FINAL_CEFR}, then a month ${COURSE_MONTHS} with your institutional diploma and free preparation for the Cambridge international exam. First month free, then $${MONTHLY_FEE} a month with no enrolment fee.`,
+    title: 'Online English school in Ecuador | Ecu593 English',
+    description: `Online English school in Ecuador: live classes, reach ${FINAL_CEFR} in ${LEVEL_COUNT} months and get free Cambridge prep. First month free, then $${MONTHLY_FEE}/month, no enrolment fee.`,
     ogImageAlt: 'Ecu593 English student passport with level stamps',
   },
   a11y: {
@@ -23,10 +23,12 @@ const en: Dictionary = {
       { href: '#modalidades', label: 'Schedule' },
       { href: '#valores', label: 'Fees' },
       { href: '#preguntas', label: 'FAQ' },
+      { href: '/blog/', label: 'Blog (ES)' },
     ],
     cta: 'First month free',
   },
   hero: {
+    eyebrow: 'Online English school in Ecuador',
     title: 'Connect, learn and master English.',
     sub: `Live classes, 100% online and 100% in English. Reach ${FINAL_CEFR} in ${LEVEL_COUNT} months, then in month ${COURSE_MONTHS} you get your diploma and free preparation for the Cambridge international certificate. Your first month is free.`,
     ctaPrimary: 'I want my free first month',
@@ -324,8 +326,33 @@ const en: Dictionary = {
     ctaPrimary: 'I want my free first month',
     ctaWhatsapp: 'Message us',
     contact: 'Contact',
+    guides: 'Guides',
+    blog: 'Blog (in Spanish): levels, B1, B2 and Cambridge',
     social: 'Social',
     rights: 'All rights reserved.',
+  },
+  blog: {
+    name: 'Ecu593 English blog',
+    indexTitle: 'English blog: levels, B1, B2 and Cambridge guides | Ecu593 English',
+    indexDescription:
+      'Practical guides to learning English online from Ecuador: the B1 graduation requirement, the Cambridge B2 First exam, CEFR levels and studying while you work.',
+    indexLead: 'Clear answers to what people ask us most: which English level you need, how it is measured and how to get there online.',
+    teaserTitle: 'Guides for your English',
+    teaserLead: 'What to know before you choose a course: levels, university requirements and the Cambridge exam. Guides are in Spanish.',
+    teaserCta: 'See all guides',
+    readMore: 'Read guide',
+    answer: 'Quick answer',
+    faq: 'FAQ',
+    sources: 'Sources',
+    published: 'Published',
+    updated: 'Updated',
+    readingTime: (minutes) => `${minutes} min read`,
+    home: 'Home',
+    related: 'Keep reading',
+    ctaTitle: `Your route to ${FINAL_CEFR}, 100% online`,
+    ctaBody: `${LEVEL_COUNT} months of live classes to reach ${FINAL_CEFR}, then a month ${COURSE_MONTHS} with your institutional diploma and free Cambridge preparation. Your first month is free.`,
+    ctaButton: 'I want my free first month',
+    author: 'Ecu593 English academic team',
   },
   whatsapp: {
     greeting: 'Hi, I would like information about the Ecu593 English courses.',

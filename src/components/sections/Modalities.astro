@@ -56,6 +56,8 @@ const copy = t.modalities;
 <style>
   .modalities {
     padding-block: var(--space-9);
+    /* Its stamp waits at 1.7× scale before it thumps in (scripts/motion.ts) and would widen the page. */
+    overflow-x: clip;
   }
   .entries {
     display: grid;

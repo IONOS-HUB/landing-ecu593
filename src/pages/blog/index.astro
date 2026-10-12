@@ -1,0 +1,168 @@
+---
+import { site } from '../../config/site';
+import { useDictionary } from '../../i18n';
+import PageLayout from '../../layouts/PageLayout.astro';
+import { formatDate, getPosts, postPath, readingMinutes } from '../../lib/blog';
+import { breadcrumbNode, organizationNode, schemaUrls, toJsonLd, websiteNode } from '../../lib/schema';
+import Icon from '../../components/ui/Icon.astro';
+
+const t = useDictionary('es');
+const copy = t.blog;
+const posts = await getPosts();
+const base = Astro.site;
+const { absolute, orgId, websiteId } = schemaUrls(base);
+const path = '/blog/';
+
+const json = toJsonLd([
+  organizationNode(base, t),
+  websiteNode(base),
+  {
+    '@type': ['Blog', 'CollectionPage'],
+    '@id': `${absolute(path)}#blog`,
+    url: absolute(path),
+    name: copy.name,
+    description: copy.indexDescription,
+    inLanguage: 'es-EC',
+    isPartOf: { '@id': websiteId },
+    publisher: { '@id': orgId },
+    blogPost: posts.map((post) => ({ '@id': `${absolute(postPath(post))}#article` })),
+  },
+  breadcrumbNode(base, [
+    { name: copy.home, path: '/' },
+    { name: 'Blog', path },
+  ]),
+]);
+---
+
+<PageLayout seo={{ title: copy.indexTitle, description: copy.indexDescription, path }}>
+  <script slot="head" type="application/ld+json" set:html={json} />
+
+  <section class="blog-head" aria-labelledby="blog-title">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">{copy.home}</a> <span aria-hidden="true">/</span> <span aria-current="page">Blog</span>
+      </nav>
+      <h1 id="blog-title">{copy.name}</h1>
+      <p class="lead">{copy.indexLead}</p>
+    </div>
+  </section>
+
+  <section class="list paper" aria-label={copy.name}>
+    <div class="container">
+      <ol class="posts">
+        {
+          posts.map((post) => (
+            <li class="post">
+              
+              <h2>
+                <a href={postPath(post)}>{post.data.title}</a>
+              </h2>
+              <p>{post.data.description}</p>
+              <p class="meta">
+                <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time> ·{' '}
+                {copy.readingTime(readingMinutes(post))}
+              </p>
+              <span class="more" aria-hidden="true">
+                {copy.readMore} <Icon name="arrow-right" size={16} />
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="brand-note">{site.name} · {site.slogan.join(' · ')}</p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .blog-head {
+    padding-block: var(--space-8) var(--space-7);
+    background:
+      var(--rosette-cover) right -18rem top -14rem / 50rem no-repeat,
+      radial-gradient(120% 90% at 50% 0%, var(--navy-800), var(--navy-900) 60%, var(--navy-950));
+    color: var(--on-navy);
+  }
+  .crumbs {
+    font-size: 0.875rem;
+    color: var(--on-navy-soft);
+  }
+  .crumbs a {
+    color: var(--on-navy);
+  }
+  h1 {
+    margin-top: var(--space-4);
+    font-size: var(--step-3);
+    max-width: 18ch;
+  }
+  .lead {
+    margin-top: var(--space-4);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--on-navy-soft);
+    max-width: 40rem;
+  }
+  .list {
+    padding-block: var(--space-8);
+  }
+  .posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+  .post {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border-radius: 10px;
+    background:
+      var(--rosette-paper) 140% 140% / 18rem no-repeat,
+      #f2f7f4;
+    box-shadow: var(--shadow-page), inset 0 0 0 1px var(--paper-edge);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .post:hover {
+    transform: translateY(-3px);
+  }
+  h2 {
+    font-size: var(--step-2);
+    line-height: 1.1;
+    color: var(--navy-900);
+  }
+  h2 a {
+    text-decoration: none;
+  }
+  h2 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .post p {
+    color: var(--ink-soft);
+  }
+  .meta {
+    font-size: 0.875rem;
+  }
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-weight: 700;
+    color: var(--sky-text);
+  }
+  .brand-note {
+    margin-top: var(--space-7);
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 760px) {
+    .posts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
