@@ -10,6 +10,7 @@ const fill = (template: string, values: Record<string, string>) =>
 const vars = (lead: LeadInput): Record<string, string> => ({
   ...lead,
   program: lead.program ?? '',
+  campaign: lead.campaign ?? '',
 });
 
 /** Ecuadorian mobile numbers: 09XXXXXXXX. */
@@ -46,6 +47,7 @@ if (form) {
       email: value('email'),
       phone: value('phone'),
       program: value('program'),
+      campaign: value('campaign'),
     };
   };
 

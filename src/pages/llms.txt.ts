@@ -30,6 +30,11 @@ export const GET: APIRoute = ({ site: base }) => {
       t.method.lead,
       ...t.method.evaluation.map((rule) => `- ${rule.label}: ${rule.value}`),
       '',
+      `### ${t.certification.title}`,
+      t.certification.lead,
+      ...t.certification.benefits.map((benefit) => `- ${benefit.title}: ${benefit.body}`),
+      t.certification.note,
+      '',
       `### FAQ`,
       ...answered.flatMap((faq) => [`- ${faq.question}`, `  ${faq.answer}`]),
     ].join('\n');

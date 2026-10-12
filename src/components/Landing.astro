@@ -5,6 +5,7 @@ import Nav from './sections/Nav.astro';
 import Hero from './sections/Hero.astro';
 import Programs from './sections/Programs.astro';
 import Method from './sections/Method.astro';
+import Certification from './sections/Certification.astro';
 import Modalities from './sections/Modalities.astro';
 import Endorsements from './sections/Endorsements.astro';
 import Testimonials from './sections/Testimonials.astro';
@@ -13,14 +14,18 @@ import Faq from './sections/Faq.astro';
 import LeadForm from './sections/LeadForm.astro';
 import Footer from './sections/Footer.astro';
 import WhatsAppFab from './WhatsAppFab.astro';
+import CampaignBar from './CampaignBar.astro';
+import CampaignDialog from './CampaignDialog.astro';
 ---
 
 <BaseLayout>
+  <CampaignBar />
   <Nav />
   <main id="contenido">
     <Hero />
     <Programs />
     <Method />
+    <Certification />
     <Modalities />
     <Endorsements />
     <Testimonials />
@@ -30,4 +35,5 @@ import WhatsAppFab from './WhatsAppFab.astro';
   </main>
   <Footer />
   <WhatsAppFab />
+  <CampaignDialog />
 </BaseLayout>

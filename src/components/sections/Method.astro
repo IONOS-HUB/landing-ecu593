@@ -1,5 +1,6 @@
 ---
 import { levels, LEVEL_COUNT, TOTAL_WEEKS, WEEKS_PER_LEVEL } from '../../data/method';
+import { COURSE_MONTHS } from '../../data/pricing';
 import { useDictionary } from '../../i18n';
 import { isPending } from '../../lib/pending';
 import Stamp from '../ui/Stamp.astro';
@@ -64,6 +65,15 @@ const pad = (n: number) => String(n).padStart(2, '0');
           </li>
         ))
       }
+      <li class="bonus">
+        <span class="bonus-number tabular" aria-hidden="true">{COURSE_MONTHS}</span>
+        <div class="bonus-text">
+          <span class="data-label">{copy.bonus.label}</span>
+          <p class="bonus-title">{copy.bonus.title}</p>
+          <p>{copy.bonus.body}</p>
+          <a href="#mes-13">{copy.bonus.link}</a>
+        </div>
+      </li>
     </ol>
   </div>
 </section>
@@ -204,6 +214,62 @@ const pad = (n: number) => String(n).padStart(2, '0');
     right: 0.5rem;
     bottom: 0.75rem;
   }
+  /* The "+1": month 13 closes the path as a navy cover page spanning the whole row. */
+  .bonus {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    padding: var(--space-5) clamp(1.25rem, 1rem + 2vw, 2.5rem);
+    border-radius: 10px;
+    background:
+      var(--rosette-cover) right -8rem center / 26rem no-repeat,
+      var(--navy-900);
+    color: var(--on-navy);
+    box-shadow: var(--shadow-lift);
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--sun) 0 50%, var(--sky) 50% 75%, var(--flame) 75%) 1;
+  }
+  .bonus-number {
+    flex: none;
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 2.5rem + 3vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--sun);
+  }
+  .bonus-text {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .bonus .data-label {
+    color: var(--on-navy-soft);
+  }
+  .bonus-title {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: var(--step-1);
+    line-height: 1.15;
+    color: var(--sun);
+  }
+  .bonus p {
+    margin: 0;
+    color: var(--on-navy-soft);
+  }
+  .bonus a {
+    justify-self: start;
+    margin-top: var(--space-2);
+    color: var(--on-navy);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+  .bonus a:hover {
+    color: var(--sun);
+  }
+
   .content-note {
     font-size: var(--step--1);
   }

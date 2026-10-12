@@ -3,7 +3,7 @@ import { siWhatsapp } from 'simple-icons';
 
 /** One icon set: authored 24px strokes at 1.75, plus the WhatsApp brand glyph. */
 interface Props {
-  name: 'whatsapp' | 'arrow-right' | 'arrow-down' | 'plus' | 'check' | 'mail' | 'pin' | 'clock';
+  name: 'whatsapp' | 'arrow-right' | 'arrow-down' | 'plus' | 'check' | 'mail' | 'pin' | 'clock' | 'close';
   size?: number;
   class?: string;
 }
@@ -18,6 +18,7 @@ const strokes: Record<Exclude<Props['name'], 'whatsapp'>, string> = {
   mail: 'M4 6h16v12H4zM4 7l8 6 8-6',
   pin: 'M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
   clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
+  close: 'M6 6l12 12M18 6L6 18',
 };
 ---
 

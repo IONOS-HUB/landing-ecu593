@@ -1,4 +1,5 @@
 ---
+import { campaign } from '../../config/campaign';
 import { site } from '../../config/site';
 import { programs } from '../../data/programs';
 import { useDictionary } from '../../i18n';
@@ -36,6 +37,7 @@ const copy = t.form;
         <span>{copy.band[0]}</span>
         <span>{copy.band[1]}</span>
       </div>
+      {campaign.active && <input type="hidden" name="campaign" value={campaign.id} />}
       <div class="grid">
         <label class="wide">
           <span class="data-label">{copy.fields.name}</span>

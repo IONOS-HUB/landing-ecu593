@@ -4,7 +4,10 @@ export type ProgramId = 'regular' | 'particulares' | 'conversacion' | 'corporati
 export type ModalityId = 'online';
 export type StampInk = 'flame' | 'sky' | 'violet' | 'navy';
 
-/** A photo slot. Without `src` it renders as an empty photo window describing the shot. */
+/**
+ * A photo slot. Without `src` it renders as an empty photo window describing the shot.
+ * Never the real teaching staff: approved AI-generated images or external models only.
+ */
 export interface ImageRef {
   src?: string;
   alt: string;

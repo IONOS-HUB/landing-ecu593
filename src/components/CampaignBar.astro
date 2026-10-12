@@ -1,0 +1,93 @@
+---
+/** Launch campaign ribbon above the nav (src/config/campaign.ts). Dismissal is remembered by scripts/campaign.ts. */
+import { campaign } from '../config/campaign';
+import { useDictionary } from '../i18n';
+import Icon from './ui/Icon.astro';
+
+const t = useDictionary(Astro.currentLocale);
+const copy = t.campaign;
+---
+
+{
+  campaign.active && (
+    <div class="campaign-bar" data-campaign-bar data-campaign-id={campaign.id}>
+      <div class="container bar">
+        <p>{copy.banner}</p>
+        <a href="#solicitud" class="cta">
+          {copy.bannerCta}
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <button type="button" class="close" data-campaign-close aria-label={copy.close} hidden>
+          <Icon name="close" size={18} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script is:inline>
+  // Hide before first paint when the visitor already closed this campaign's ribbon.
+  (function () {
+    var bar = document.querySelector('[data-campaign-bar]');
+    try {
+      if (bar && localStorage.getItem('ecu593:' + bar.dataset.campaignId + ':bar') === 'closed') bar.hidden = true;
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+  .campaign-bar {
+    background: var(--sun);
+    color: var(--navy-900);
+    border-bottom: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--sun-deep) 0 50%, var(--sky) 50% 75%, var(--flame) 75%) 1;
+  }
+  .campaign-bar[hidden] {
+    display: none;
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2) var(--space-4);
+    min-height: 2.75rem;
+    padding-block: var(--space-2);
+    padding-right: 2.5rem;
+    position: relative;
+    text-align: center;
+  }
+  p {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.9375rem;
+  }
+  .close {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0;
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .close:hover {
+    background: rgb(20 32 74 / 0.1);
+  }
+  .close[hidden] {
+    display: none;
+  }
+</style>
