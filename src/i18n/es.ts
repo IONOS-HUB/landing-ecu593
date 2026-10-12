@@ -5,8 +5,8 @@ import type { Dictionary } from './types';
 
 const es: Dictionary = {
   meta: {
-    title: `Ecu593 English | Inglés ${FINAL_CEFR} en ${LEVEL_COUNT} meses + preparación Cambridge gratis`,
-    description: `Academia de inglés 100% virtual en Ecuador. Programa ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}: ${LEVEL_COUNT} meses de clases en vivo para llegar a ${FINAL_CEFR} y un mes ${COURSE_MONTHS} con tu diploma institucional y preparación gratis para el examen internacional de Cambridge. Primer mes gratis, luego $${MONTHLY_FEE} al mes sin matrícula.`,
+    title: 'Academia de inglés online en Ecuador | Ecu593 English',
+    description: `Academia de inglés online en Ecuador: clases en vivo, llega a ${FINAL_CEFR} en ${LEVEL_COUNT} meses y prepárate gratis para Cambridge. Primer mes gratis, $${MONTHLY_FEE}/mes, sin matrícula.`,
     ogImageAlt: 'Pasaporte de estudiante de Ecu593 English con sellos de nivel',
   },
   a11y: {
@@ -23,10 +23,12 @@ const es: Dictionary = {
       { href: '#modalidades', label: 'Horarios' },
       { href: '#valores', label: 'Inversión' },
       { href: '#preguntas', label: 'Preguntas' },
+      { href: '/blog/', label: 'Blog' },
     ],
     cta: 'Primer mes gratis',
   },
   hero: {
+    eyebrow: 'Academia de inglés online en Ecuador',
     title: 'Conéctate, aprende y domina el inglés.',
     sub: `Clases en vivo, 100% virtuales y 100% en inglés. En ${LEVEL_COUNT} meses llegas a ${FINAL_CEFR}, y en el mes ${COURSE_MONTHS} recibes tu diploma y te preparamos gratis para la certificación internacional de Cambridge. Tu primer mes es gratis.`,
     ctaPrimary: 'Quiero mi primer mes gratis',
@@ -324,8 +326,34 @@ const es: Dictionary = {
     ctaPrimary: 'Quiero mi primer mes gratis',
     ctaWhatsapp: 'Escríbenos',
     contact: 'Contacto',
+    guides: 'Guías',
+    blog: 'Blog: inglés, B1, B2 y Cambridge',
     social: 'Redes',
     rights: 'Todos los derechos reservados.',
+  },
+  blog: {
+    name: 'Blog de Ecu593 English',
+    indexTitle: 'Blog de inglés: guías de niveles, B1, B2 y Cambridge | Ecu593 English',
+    indexDescription:
+      'Guías para aprender inglés online desde Ecuador: el requisito B1 para graduarte, el examen Cambridge B2 First, los niveles del MCER y cómo estudiar si trabajas.',
+    indexLead:
+      'Respuestas claras a lo que más nos preguntan: qué nivel de inglés te piden, cómo se mide y cómo llegar a él estudiando online desde Ecuador.',
+    teaserTitle: 'Guías para tu inglés',
+    teaserLead: 'Lo que necesitas saber antes de elegir un curso: niveles, requisitos de tu universidad y el examen de Cambridge.',
+    teaserCta: 'Ver todas las guías',
+    readMore: 'Leer guía',
+    answer: 'Respuesta rápida',
+    faq: 'Preguntas frecuentes',
+    sources: 'Fuentes',
+    published: 'Publicado',
+    updated: 'Actualizado',
+    readingTime: (minutes) => `${minutes} min de lectura`,
+    home: 'Inicio',
+    related: 'Sigue leyendo',
+    ctaTitle: `Tu ruta a ${FINAL_CEFR}, 100% online`,
+    ctaBody: `${LEVEL_COUNT} meses de clases en vivo para llegar a ${FINAL_CEFR} y un mes ${COURSE_MONTHS} con tu diploma institucional y preparación gratis para Cambridge. Tu primer mes es gratis.`,
+    ctaButton: 'Quiero mi primer mes gratis',
+    author: 'Equipo académico de Ecu593 English',
   },
   whatsapp: {
     greeting: 'Hola, quiero información sobre los cursos de inglés de Ecu593 English.',

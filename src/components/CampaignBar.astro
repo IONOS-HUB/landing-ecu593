@@ -6,6 +6,12 @@ import Icon from './ui/Icon.astro';
 
 const t = useDictionary(Astro.currentLocale);
 const copy = t.campaign;
+
+/** On pages other than the landing, pass home="/" so in-page anchors point back to the landing. */
+interface Props {
+  home?: string;
+}
+const { home = '' } = Astro.props;
 ---
 
 {
@@ -13,7 +19,7 @@ const copy = t.campaign;
     <div class="campaign-bar" data-campaign-bar data-campaign-id={campaign.id}>
       <div class="container bar">
         <p>{copy.banner}</p>
-        <a href="#solicitud" class="cta">
+        <a href={`${home}#solicitud`} class="cta">
           {copy.bannerCta}
           <Icon name="arrow-right" size={16} />
         </a>

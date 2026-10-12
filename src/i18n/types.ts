@@ -28,6 +28,8 @@ export interface Dictionary {
     cta: string;
   };
   hero: {
+    /** Keyword line above the headline, part of the H1. */
+    eyebrow: string;
     title: string;
     sub: string;
     ctaPrimary: string;
@@ -171,8 +173,33 @@ export interface Dictionary {
     ctaPrimary: string;
     ctaWhatsapp: string;
     contact: string;
+    guides: string;
+    blog: string;
     social: string;
     rights: string;
+  };
+  /** Blog (Spanish only) and the landing teaser that links to it. */
+  blog: {
+    name: string;
+    indexTitle: string;
+    indexDescription: string;
+    indexLead: string;
+    teaserTitle: string;
+    teaserLead: string;
+    teaserCta: string;
+    readMore: string;
+    answer: string;
+    faq: string;
+    sources: string;
+    published: string;
+    updated: string;
+    readingTime: (minutes: number) => string;
+    home: string;
+    related: string;
+    ctaTitle: string;
+    ctaBody: string;
+    ctaButton: string;
+    author: string;
   };
   whatsapp: {
     greeting: string;

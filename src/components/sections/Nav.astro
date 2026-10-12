@@ -5,11 +5,18 @@ import Button from '../ui/Button.astro';
 
 const locale = toLocale(Astro.currentLocale);
 const t = useDictionary(locale);
+
+/** On pages other than the landing, pass home="/" so in-page anchors point back to the landing. */
+interface Props {
+  home?: string;
+}
+const { home = '' } = Astro.props;
+const href = (link: string) => (link.startsWith('#') ? `${home}${link}` : link);
 ---
 
 <header class="nav">
   <div class="container bar">
-    <a class="brand" href="#top" aria-label={`${site.name}, ${t.a11y.home}`}>
+    <a class="brand" href={home || '#top'} aria-label={`${site.name}, ${t.a11y.home}`}>
       <img src={site.logo.src} width={site.logo.width} height={site.logo.height} alt="" />
       <span class="brand-name">
         {site.name}
@@ -18,7 +25,7 @@ const t = useDictionary(locale);
     </a>
     <nav aria-label={t.a11y.sections}>
       <ul>
-        {t.nav.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        {t.nav.links.map((link) => <li><a href={href(link.href)}>{link.label}</a></li>)}
       </ul>
     </nav>
     <div class="lang" role="group" aria-label={t.a11y.languageSwitch}>
@@ -36,7 +43,7 @@ const t = useDictionary(locale);
         )
       }
     </div>
-    <Button href="#solicitud" class="nav-cta">{t.nav.cta}</Button>
+    <Button href={`${home}#solicitud`} class="nav-cta">{t.nav.cta}</Button>
   </div>
 </header>
 

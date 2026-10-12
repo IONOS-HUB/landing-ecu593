@@ -1,0 +1,108 @@
+---
+/** Latest blog guides on the landing: internal links that help the posts get crawled and ranked. */
+import { useDictionary } from '../../i18n';
+import { getPosts, postPath, readingMinutes } from '../../lib/blog';
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const t = useDictionary(Astro.currentLocale);
+const copy = t.blog;
+const posts = (await getPosts()).slice(0, 3);
+---
+
+{
+  posts.length > 0 && (
+    <section class="guides" aria-labelledby="guias">
+      <div class="container">
+        <SectionHeading id="guias" title={copy.teaserTitle} lead={copy.teaserLead} />
+        <ul class="cards">
+          {posts.map((post) => (
+            <li class="card" data-anim="row">
+              <span class="data-label">{copy.readingTime(readingMinutes(post))}</span>
+              <h3>
+                <a href={postPath(post)} lang="es-EC">{post.data.title}</a>
+              </h3>
+              <p lang="es-EC">{post.data.description}</p>
+              <span class="more" aria-hidden="true">
+                {copy.readMore} <Icon name="arrow-right" size={16} />
+              </span>
+            </li>
+          ))}
+        </ul>
+        <a class="all" href="/blog/">
+          {copy.teaserCta} <Icon name="arrow-right" size={18} />
+        </a>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .guides {
+    padding-block: var(--space-9);
+    background-color: var(--paper-deep);
+    background-image: var(--guilloche-band);
+    background-size: 240px 96px;
+    border-block: 1.5px solid var(--paper-edge);
+  }
+  .cards {
+    list-style: none;
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  .card {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border-radius: 10px;
+    background:
+      var(--rosette-paper) 140% 140% / 16rem no-repeat,
+      var(--paper);
+    box-shadow: var(--shadow-page), inset 0 0 0 1px var(--paper-edge);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  h3 {
+    font-size: var(--step-1);
+    line-height: 1.2;
+    color: var(--navy-900);
+  }
+  /* The whole card is the link target. */
+  h3 a {
+    text-decoration: none;
+  }
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  p {
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+  }
+  .more,
+  .all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-weight: 700;
+    color: var(--sky-text);
+  }
+  .all {
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 900px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

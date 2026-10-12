@@ -29,6 +29,8 @@ const toPayload = (input: LeadInput, lang: string) =>
     source: 'landing',
     lang,
     page: location.href,
+    // The page the visitor came from (e.g. a blog guide), to know which content brings leads.
+    referrer: document.referrer,
   });
 
 export async function submitLead(webhookUrl: string, input: LeadInput, lang: string): Promise<LeadResult> {
