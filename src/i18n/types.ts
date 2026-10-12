@@ -72,6 +72,26 @@ export interface Dictionary {
     stamp: { top: (level: string) => string; main: string; bottom: (week: number) => string };
     evaluation: { label: string; value: string }[];
     levelContent: Maybe<string>;
+    /** The "+1" at the end of the 12-level path: links to the month 13 block. */
+    bonus: { label: string; title: string; body: string; link: string };
+  };
+  /** Month 13: institutional diploma + free Cambridge preparation (the core value proposition). */
+  certification: {
+    title: string;
+    lead: string;
+    monthLabel: string;
+    stamp: StampText;
+    benefits: { tag: string; title: string; body: string }[];
+    note: string;
+    examFee: Maybe<string>;
+    cta: string;
+  };
+  /** Launch campaign "Mes Gratis" (src/config/campaign.ts). */
+  campaign: {
+    banner: string;
+    bannerCta: string;
+    close: string;
+    dialog: { stamp: StampText; title: string; body: string; cta: string; dismiss: string };
   };
   modalities: {
     title: string;

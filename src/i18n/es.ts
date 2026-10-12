@@ -5,8 +5,8 @@ import type { Dictionary } from './types';
 
 const es: Dictionary = {
   meta: {
-    title: `Ecu593 English | Inglés 100% virtual, nivel ${FINAL_CEFR} en 1 año`,
-    description: `Academia de inglés 100% virtual en Ecuador. Llega al nivel ${FINAL_CEFR} en ${LEVEL_COUNT} meses con clases en vivo todos los días, 100% en inglés y en grupos reducidos. Primer mes gratis, luego $${MONTHLY_FEE} al mes sin matrícula.`,
+    title: `Ecu593 English | Inglés ${FINAL_CEFR} en ${LEVEL_COUNT} meses + preparación Cambridge gratis`,
+    description: `Academia de inglés 100% virtual en Ecuador. Programa ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}: ${LEVEL_COUNT} meses de clases en vivo para llegar a ${FINAL_CEFR} y un mes ${COURSE_MONTHS} con tu diploma institucional y preparación gratis para el examen internacional de Cambridge. Primer mes gratis, luego $${MONTHLY_FEE} al mes sin matrícula.`,
     ogImageAlt: 'Pasaporte de estudiante de Ecu593 English con sellos de nivel',
   },
   a11y: {
@@ -18,7 +18,8 @@ const es: Dictionary = {
   nav: {
     links: [
       { href: '#programas', label: 'Programas' },
-      { href: '#metodo', label: `Nivel ${FINAL_CEFR}` },
+      { href: '#metodo', label: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}` },
+      { href: '#mes-13', label: 'Cambridge' },
       { href: '#modalidades', label: 'Horarios' },
       { href: '#valores', label: 'Inversión' },
       { href: '#preguntas', label: 'Preguntas' },
@@ -27,7 +28,7 @@ const es: Dictionary = {
   },
   hero: {
     title: 'Conéctate, aprende y domina el inglés.',
-    sub: `Clases en vivo, 100% virtuales y 100% en inglés, en grupos reducidos. Llegas al nivel ${FINAL_CEFR} en ${LEVEL_COUNT} meses y tu primer mes es gratis.`,
+    sub: `Clases en vivo, 100% virtuales y 100% en inglés. En ${LEVEL_COUNT} meses llegas a ${FINAL_CEFR}, y en el mes ${COURSE_MONTHS} recibes tu diploma y te preparamos gratis para la certificación internacional de Cambridge. Tu primer mes es gratis.`,
     ctaPrimary: 'Quiero mi primer mes gratis',
     ctaWhatsapp: 'Escríbenos',
     passportLabel: 'Pasaporte de estudiante Ecu593 English',
@@ -36,8 +37,8 @@ const es: Dictionary = {
     fields: [
       { label: 'Titular / Holder', value: 'Tú' },
       { label: 'Destino / Destination', value: `Inglés ${FINAL_CEFR}` },
-      { label: 'Programas / Programs', value: `${FINAL_CEFR} · Particulares · Conversación · Empresas` },
-      { label: 'Duración / Length', value: `${LEVEL_COUNT} meses + ${CERTIFICATION_MONTHS} de certificación` },
+      { label: 'Duración / Length', value: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} meses` },
+      { label: `Mes ${COURSE_MONTHS} / Month ${COURSE_MONTHS}`, value: `Diploma + prep. Cambridge ${FINAL_CEFR} gratis` },
       { label: 'Modalidad / Mode', value: '100% virtual, en vivo' },
       { label: 'Primer mes / First month', value: 'Gratis' },
     ],
@@ -64,7 +65,11 @@ const es: Dictionary = {
         audience: `Desde cero hasta ${FINAL_CEFR}`,
         duration: `${LEVEL_COUNT} meses + ${CERTIFICATION_MONTHS} de certificación`,
         pitch: `Clases de lunes a viernes, o solo los sábados. Practicas las 4 habilidades todos los días y en ${LEVEL_COUNT} meses llegas al nivel ${FINAL_CEFR}.`,
-        focus: ['Hablar, escuchar, leer y escribir en cada clase', 'Lunes a viernes o solo sábados', 'Diploma del Centro de Idiomas del Valle'],
+        focus: [
+          'Hablar, escuchar, leer y escribir en cada clase',
+          'Lunes a viernes o solo sábados',
+          `Mes ${COURSE_MONTHS}: diploma institucional + preparación Cambridge gratis`,
+        ],
         imageAlt: 'Clase en vivo del curso regular de Ecu593 English',
         imageBrief: 'Captura de una clase online del curso regular, con la docente y el grupo en pantalla',
       },
@@ -98,8 +103,8 @@ const es: Dictionary = {
     },
   },
   method: {
-    title: `Nivel ${FINAL_CEFR} en ${LEVEL_COUNT} meses.`,
-    lead: `El curso regular tiene ${LEVEL_COUNT} niveles de ${WEEKS_PER_LEVEL} semanas, uno por mes. Con el último llegas a ${FINAL_CEFR}, y el mes ${COURSE_MONTHS} es para rendir el examen de certificación y recibir tu diploma del Centro de Idiomas del Valle.`,
+    title: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}: tu ruta a ${FINAL_CEFR}.`,
+    lead: `${LEVEL_COUNT} meses de estudio, un nivel de ${WEEKS_PER_LEVEL} semanas por mes, hasta llegar a ${FINAL_CEFR}. Después viene el +${CERTIFICATION_MONTHS}: el mes ${COURSE_MONTHS}, dedicado por completo a tu evaluación final y a prepararte gratis para Cambridge.`,
     counterLabel: 'Tu pasaporte',
     weeksOf: `de ${TOTAL_WEEKS} semanas`,
     levelLabel: 'Nivel',
@@ -112,6 +117,45 @@ const es: Dictionary = {
       { label: 'Asistencia mínima', value: '75 %' },
     ],
     levelContent: pending('Contenido o temas de cada nivel'),
+    bonus: {
+      label: `+${CERTIFICATION_MONTHS} · Mes ${COURSE_MONTHS}`,
+      title: 'Bono de certificación',
+      body: `Examen final para tu diploma institucional y preparación gratis para el examen internacional de Cambridge ${FINAL_CEFR}.`,
+      link: `Qué incluye el mes ${COURSE_MONTHS}`,
+    },
+  },
+  certification: {
+    title: `Mes ${COURSE_MONTHS}: tu diploma y tu preparación Cambridge, gratis.`,
+    lead: `Terminas tus ${LEVEL_COUNT} niveles y no te dejamos solo con tu inglés. El mes ${COURSE_MONTHS} es un bono dedicado 100% a evaluarte y a prepararte con estrategia para certificar tu nivel.`,
+    monthLabel: 'Mes',
+    stamp: { top: 'Bono de certificación', main: 'Gratis', bottom: `Mes ${COURSE_MONTHS}` },
+    benefits: [
+      {
+        tag: 'Diploma institucional',
+        title: 'Tu título del Centro de Idiomas del Valle',
+        body: `Rindes el examen final del mes ${COURSE_MONTHS} y, al aprobarlo, recibes tu diploma institucional, un título propio del Centro de Idiomas del Valle CIVTU S.A.S.`,
+      },
+      {
+        tag: 'Preparación internacional · Gratis',
+        title: `Te preparamos para Cambridge ${FINAL_CEFR}`,
+        body: `Durante el mes ${COURSE_MONTHS} recibes, sin costo, preparación especializada para rendir el examen internacional de Cambridge de nivel ${FINAL_CEFR}.`,
+      },
+    ],
+    note: 'Lo gratuito es la preparación. El examen oficial de Cambridge lo rindes en un centro autorizado por Cambridge English.',
+    examFee: pending('¿La tarifa del examen oficial de Cambridge está incluida o la paga el estudiante?'),
+    cta: 'Quiero mi primer mes gratis',
+  },
+  campaign: {
+    banner: 'Lanzamiento: tu primer mes es gratis, sin matrícula y sin compromiso.',
+    bannerCta: 'Reservar mi mes gratis',
+    close: 'Cerrar aviso',
+    dialog: {
+      stamp: { top: 'Lanzamiento', main: 'Gratis', bottom: 'Primer mes' },
+      title: 'Tu primer mes es gratis',
+      body: `Empieza tu ruta ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} sin pagar el primer mes y sin matrícula. Al final, en el mes ${COURSE_MONTHS}, te preparamos gratis para Cambridge ${FINAL_CEFR}.`,
+      cta: 'Reservar mi mes gratis',
+      dismiss: 'Ahora no',
+    },
   },
   modalities: {
     title: '100% virtual, en vivo. Estos son los horarios.',
@@ -151,8 +195,12 @@ const es: Dictionary = {
         body: 'Todos tienen formación universitaria en pedagogía del idioma inglés y certificación internacional de nivel C1.',
       },
       {
-        title: 'Diploma',
-        body: 'Al terminar recibes un diploma del Centro de Idiomas del Valle CIVTU S.A.S., una empresa especializada en la enseñanza del inglés.',
+        title: 'Diploma institucional',
+        body: `Al aprobar el examen del mes ${COURSE_MONTHS} recibes un título institucional propio del Centro de Idiomas del Valle CIVTU S.A.S., una empresa especializada en la enseñanza del inglés.`,
+      },
+      {
+        title: 'Preparación Cambridge gratis',
+        body: `En el mes ${COURSE_MONTHS} te preparamos sin costo para el examen internacional de Cambridge de nivel ${FINAL_CEFR}.`,
       },
       {
         title: 'Reglas claras desde el primer día',
@@ -177,7 +225,9 @@ const es: Dictionary = {
       { label: 'Pensión mensual', value: `$${MONTHLY_FEE}` },
       { label: 'Matrícula', value: '$0' },
       { label: 'Material de estudio', value: 'Incluido' },
-      { label: 'Duración', value: `${COURSE_MONTHS} meses` },
+      { label: 'Duración', value: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} meses` },
+      { label: `Preparación Cambridge (mes ${COURSE_MONTHS})`, value: 'Gratis' },
+      { label: `Pensión del mes ${COURSE_MONTHS}`, value: pending(`¿Se cobra pensión en el mes ${COURSE_MONTHS} o es parte del bono?`) },
       { label: 'Formas de pago', value: pending('Formas de pago aceptadas') },
     ],
     note: 'Sin matrícula, sin costo de materiales y sin pagos ocultos. El primer mes es gratis y sin compromiso.',
@@ -193,7 +243,7 @@ const es: Dictionary = {
     items: [
       {
         question: '¿Cuánto dura el curso?',
-        answer: `${COURSE_MONTHS} meses: ${LEVEL_COUNT} meses de clases, un nivel de ${WEEKS_PER_LEVEL} semanas por mes, para llegar a ${FINAL_CEFR}, y ${CERTIFICATION_MONTHS} mes más para el examen de certificación.`,
+        answer: `${COURSE_MONTHS} meses, con la fórmula ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}: ${LEVEL_COUNT} meses de clases, un nivel de ${WEEKS_PER_LEVEL} semanas por mes, para llegar a ${FINAL_CEFR}, y un mes ${COURSE_MONTHS} dedicado a tu evaluación final y a tu preparación para Cambridge.`,
       },
       {
         question: '¿Cuánto cuesta?',
@@ -210,8 +260,16 @@ const es: Dictionary = {
       },
       {
         question: '¿Entregan certificado?',
+        answer: `Sí. Al aprobar el examen del mes ${COURSE_MONTHS} recibes un diploma institucional, un título propio del Centro de Idiomas del Valle CIVTU S.A.S. Además, ese mes te preparamos gratis para el examen internacional de Cambridge de nivel ${FINAL_CEFR}.`,
+      },
+      {
+        question: `¿Qué pasa en el mes ${COURSE_MONTHS}?`,
+        answer: `Es tu bono de certificación. Ya terminaste los ${LEVEL_COUNT} niveles, así que ese mes se dedica por completo a tu examen final institucional y a una preparación especializada, sin costo, para el examen de Cambridge ${FINAL_CEFR}.`,
+      },
+      {
+        question: '¿El examen de Cambridge está incluido?',
         answer:
-          'Sí. Al terminar rindes el examen de certificación y recibes un diploma del Centro de Idiomas del Valle CIVTU S.A.S.',
+          'Lo que incluimos gratis es la preparación. El examen oficial de Cambridge lo rindes en un centro autorizado por Cambridge English.',
       },
       {
         question: '¿Cómo me inscribo?',
@@ -230,7 +288,7 @@ const es: Dictionary = {
     ],
   },
   form: {
-    title: 'Pide información',
+    title: 'Reserva tu primer mes gratis',
     lead: 'Déjanos tu nombre, correo y celular. Un asesor te contactará para ayudarte a elegir tu programa y tu horario.',
     steps: ['Envías tus datos', 'Un asesor te contacta', 'Eliges tu horario', 'Empiezas tu primer mes gratis'],
     alt: '¿Prefieres hablar ya?',

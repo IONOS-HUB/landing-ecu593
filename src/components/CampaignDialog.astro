@@ -1,0 +1,147 @@
+---
+/**
+ * One-time launch pop-up for the "Mes Gratis" campaign (src/config/campaign.ts).
+ * scripts/campaign.ts opens it once per visitor; without JS it never shows.
+ */
+import { campaign } from '../config/campaign';
+import { useDictionary } from '../i18n';
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
+import Stamp from './ui/Stamp.astro';
+
+const t = useDictionary(Astro.currentLocale);
+const copy = t.campaign;
+---
+
+{
+  campaign.active && (
+    <dialog
+      class="campaign-dialog"
+      aria-labelledby="campaign-dialog-title"
+      data-campaign-dialog
+      data-campaign-id={campaign.id}
+      data-delay={campaign.dialogDelaySeconds}
+    >
+      <form method="dialog" class="sheet">
+        <button class="close" value="dismiss" aria-label={copy.close}>
+          <Icon name="close" size={20} />
+        </button>
+        <Stamp class="dialog-stamp" {...copy.dialog.stamp} ink="flame" rotate={-10} size="6.5rem" animate={false} />
+        <h2 id="campaign-dialog-title">{copy.dialog.title}</h2>
+        <p>{copy.dialog.body}</p>
+        <div class="actions">
+          <Button href="#solicitud" data-campaign-go="">{copy.dialog.cta}</Button>
+          <button class="later" value="dismiss">{copy.dialog.dismiss}</button>
+        </div>
+      </form>
+    </dialog>
+  )
+}
+
+<script>
+  import '../scripts/campaign';
+</script>
+
+<style>
+  .campaign-dialog {
+    width: min(100% - 2rem, 30rem);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-page);
+    background: transparent;
+    color: var(--ink);
+    overflow: visible;
+  }
+  .campaign-dialog::backdrop {
+    background: rgb(11 19 48 / 0.6);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .sheet {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    padding-top: var(--space-7);
+    border-radius: var(--radius-page);
+    background-color: var(--paper);
+    background-image: var(--guilloche-band);
+    background-size: 240px 96px;
+    box-shadow: var(--shadow-page), inset 0 0 0 1px var(--paper-edge);
+    border-top: 6px solid transparent;
+    border-image: linear-gradient(90deg, var(--sun) 0 50%, var(--sky) 50% 75%, var(--flame) 75%) 1;
+  }
+  /* Stamped over the top edge of the sheet, clear of the title and body. */
+  .sheet :global(.dialog-stamp) {
+    position: absolute;
+    right: 3.5rem;
+    top: -3.25rem;
+    mix-blend-mode: normal;
+  }
+  h2 {
+    font-size: var(--step-2);
+    color: var(--navy-900);
+    max-width: 12ch;
+  }
+  p {
+    color: var(--ink-soft);
+    max-width: 26rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    color: var(--navy-900);
+  }
+  .later {
+    padding: var(--space-2) 0;
+    border: 0;
+    background: none;
+    color: var(--ink-soft);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .close {
+    position: absolute;
+    right: var(--space-2);
+    top: var(--space-2);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 0;
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--navy-900);
+    cursor: pointer;
+  }
+  .close:hover {
+    background: rgb(20 32 74 / 0.08);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .campaign-dialog[open] .sheet {
+      animation: dialog-in 420ms var(--ease-out);
+    }
+    .campaign-dialog[open]::backdrop {
+      animation: backdrop-in 300ms ease-out;
+    }
+  }
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+    }
+  }
+  @keyframes backdrop-in {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

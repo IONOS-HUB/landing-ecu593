@@ -5,8 +5,8 @@ import type { Dictionary } from './types';
 
 const en: Dictionary = {
   meta: {
-    title: `Ecu593 English | 100% online English, ${FINAL_CEFR} level in 1 year`,
-    description: `100% online English school in Ecuador. Reach ${FINAL_CEFR} in ${LEVEL_COUNT} months with live classes every day, entirely in English and in small groups. First month free, then $${MONTHLY_FEE} a month with no enrolment fee.`,
+    title: `Ecu593 English | ${FINAL_CEFR} English in ${LEVEL_COUNT} months + free Cambridge preparation`,
+    description: `100% online English school in Ecuador. The ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} program: ${LEVEL_COUNT} months of live classes to reach ${FINAL_CEFR}, then a month ${COURSE_MONTHS} with your institutional diploma and free preparation for the Cambridge international exam. First month free, then $${MONTHLY_FEE} a month with no enrolment fee.`,
     ogImageAlt: 'Ecu593 English student passport with level stamps',
   },
   a11y: {
@@ -18,7 +18,8 @@ const en: Dictionary = {
   nav: {
     links: [
       { href: '#programas', label: 'Programs' },
-      { href: '#metodo', label: `${FINAL_CEFR} level` },
+      { href: '#metodo', label: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}` },
+      { href: '#mes-13', label: 'Cambridge' },
       { href: '#modalidades', label: 'Schedule' },
       { href: '#valores', label: 'Fees' },
       { href: '#preguntas', label: 'FAQ' },
@@ -27,7 +28,7 @@ const en: Dictionary = {
   },
   hero: {
     title: 'Connect, learn and master English.',
-    sub: `Live classes, 100% online and 100% in English, in small groups. Reach ${FINAL_CEFR} in ${LEVEL_COUNT} months, and your first month is free.`,
+    sub: `Live classes, 100% online and 100% in English. Reach ${FINAL_CEFR} in ${LEVEL_COUNT} months, then in month ${COURSE_MONTHS} you get your diploma and free preparation for the Cambridge international certificate. Your first month is free.`,
     ctaPrimary: 'I want my free first month',
     ctaWhatsapp: 'Message us',
     passportLabel: 'Ecu593 English student passport',
@@ -36,8 +37,8 @@ const en: Dictionary = {
     fields: [
       { label: 'Holder / Titular', value: 'You' },
       { label: 'Destination / Destino', value: `English ${FINAL_CEFR}` },
-      { label: 'Programs / Programas', value: `${FINAL_CEFR} · Private · Conversation · Business` },
-      { label: 'Length / Duración', value: `${LEVEL_COUNT} months + ${CERTIFICATION_MONTHS} for certification` },
+      { label: 'Length / Duración', value: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} months` },
+      { label: `Month ${COURSE_MONTHS} / Mes ${COURSE_MONTHS}`, value: `Diploma + free Cambridge ${FINAL_CEFR} prep` },
       { label: 'Mode / Modalidad', value: '100% online, live' },
       { label: 'First month / Primer mes', value: 'Free' },
     ],
@@ -64,7 +65,11 @@ const en: Dictionary = {
         audience: `From zero to ${FINAL_CEFR}`,
         duration: `${LEVEL_COUNT} months + ${CERTIFICATION_MONTHS} for certification`,
         pitch: `Classes Monday to Friday, or Saturdays only. You practise all 4 skills every day and reach ${FINAL_CEFR} in ${LEVEL_COUNT} months.`,
-        focus: ['Speaking, listening, reading and writing every class', 'Monday to Friday or Saturdays only', 'Diploma from Centro de Idiomas del Valle'],
+        focus: [
+          'Speaking, listening, reading and writing every class',
+          'Monday to Friday or Saturdays only',
+          `Month ${COURSE_MONTHS}: institutional diploma + free Cambridge preparation`,
+        ],
         imageAlt: 'Live class of the Ecu593 English regular course',
         imageBrief: 'Screenshot of an online regular-course class, teacher and group on screen',
       },
@@ -98,8 +103,8 @@ const en: Dictionary = {
     },
   },
   method: {
-    title: `${FINAL_CEFR} level in ${LEVEL_COUNT} months.`,
-    lead: `The regular course has ${LEVEL_COUNT} levels of ${WEEKS_PER_LEVEL} weeks, one a month. The last one takes you to ${FINAL_CEFR}, and month ${COURSE_MONTHS} is for the certification exam and your diploma from Centro de Idiomas del Valle.`,
+    title: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS}: your route to ${FINAL_CEFR}.`,
+    lead: `${LEVEL_COUNT} months of study, one ${WEEKS_PER_LEVEL}-week level a month, until you reach ${FINAL_CEFR}. Then comes the +${CERTIFICATION_MONTHS}: month ${COURSE_MONTHS}, devoted entirely to your final assessment and to free Cambridge preparation.`,
     counterLabel: 'Your passport',
     weeksOf: `of ${TOTAL_WEEKS} weeks`,
     levelLabel: 'Level',
@@ -112,6 +117,45 @@ const en: Dictionary = {
       { label: 'Minimum attendance', value: '75 %' },
     ],
     levelContent: pending('Contenido o temas de cada nivel (inglés)'),
+    bonus: {
+      label: `+${CERTIFICATION_MONTHS} · Month ${COURSE_MONTHS}`,
+      title: 'Certification bonus',
+      body: `Final exam for your institutional diploma and free preparation for the Cambridge ${FINAL_CEFR} international exam.`,
+      link: `What month ${COURSE_MONTHS} includes`,
+    },
+  },
+  certification: {
+    title: `Month ${COURSE_MONTHS}: your diploma and your Cambridge preparation, free.`,
+    lead: `You finish your ${LEVEL_COUNT} levels and we don't leave you on your own. Month ${COURSE_MONTHS} is a bonus devoted 100% to assessing you and preparing you, with a strategy, to certify your level.`,
+    monthLabel: 'Month',
+    stamp: { top: 'Certification bonus', main: 'Free', bottom: `Month ${COURSE_MONTHS}` },
+    benefits: [
+      {
+        tag: 'Institutional diploma',
+        title: 'Your Centro de Idiomas del Valle diploma',
+        body: `You sit the month ${COURSE_MONTHS} final exam and, once you pass, you receive your institutional diploma, issued by Centro de Idiomas del Valle CIVTU S.A.S. itself.`,
+      },
+      {
+        tag: 'International preparation · Free',
+        title: `We prepare you for Cambridge ${FINAL_CEFR}`,
+        body: `During month ${COURSE_MONTHS} you get specialised preparation, at no cost, to sit the Cambridge international exam at ${FINAL_CEFR} level.`,
+      },
+    ],
+    note: 'What is free is the preparation. You sit the official Cambridge exam at a Cambridge English authorised centre.',
+    examFee: pending('¿La tarifa del examen oficial de Cambridge está incluida o la paga el estudiante? (inglés)'),
+    cta: 'I want my free first month',
+  },
+  campaign: {
+    banner: 'Launch offer: your first month is free, with no enrolment fee and no commitment.',
+    bannerCta: 'Claim my free month',
+    close: 'Close notice',
+    dialog: {
+      stamp: { top: 'Launch', main: 'Free', bottom: 'First month' },
+      title: 'Your first month is free',
+      body: `Start your ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} route without paying the first month and with no enrolment fee. At the end, in month ${COURSE_MONTHS}, we prepare you for Cambridge ${FINAL_CEFR} for free.`,
+      cta: 'Claim my free month',
+      dismiss: 'Not now',
+    },
   },
   modalities: {
     title: '100% online, live. Here is the schedule.',
@@ -151,8 +195,12 @@ const en: Dictionary = {
         body: 'Every teacher holds a university degree in English language teaching and an international C1 certificate.',
       },
       {
-        title: 'Diploma',
-        body: 'When you finish you receive a diploma from Centro de Idiomas del Valle CIVTU S.A.S., a company specialised in English teaching.',
+        title: 'Institutional diploma',
+        body: `When you pass the month ${COURSE_MONTHS} exam you receive an institutional diploma issued by Centro de Idiomas del Valle CIVTU S.A.S., a company specialised in English teaching.`,
+      },
+      {
+        title: 'Free Cambridge preparation',
+        body: `In month ${COURSE_MONTHS} we prepare you, at no cost, for the Cambridge international exam at ${FINAL_CEFR} level.`,
       },
       {
         title: 'Clear rules from day one',
@@ -177,7 +225,9 @@ const en: Dictionary = {
       { label: 'Monthly fee', value: `$${MONTHLY_FEE}` },
       { label: 'Enrolment', value: '$0' },
       { label: 'Study materials', value: 'Included' },
-      { label: 'Length', value: `${COURSE_MONTHS} months` },
+      { label: 'Length', value: `${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} months` },
+      { label: `Cambridge preparation (month ${COURSE_MONTHS})`, value: 'Free' },
+      { label: `Month ${COURSE_MONTHS} fee`, value: pending(`¿Se cobra pensión en el mes ${COURSE_MONTHS} o es parte del bono? (inglés)`) },
       { label: 'Payment methods', value: pending('Formas de pago aceptadas (inglés)') },
     ],
     note: 'No enrolment fee, no charge for materials and no hidden costs. The first month is free, with no commitment.',
@@ -193,7 +243,7 @@ const en: Dictionary = {
     items: [
       {
         question: 'How long is the course?',
-        answer: `${COURSE_MONTHS} months: ${LEVEL_COUNT} months of classes, one ${WEEKS_PER_LEVEL}-week level a month, to reach ${FINAL_CEFR}, plus ${CERTIFICATION_MONTHS} month for the certification exam.`,
+        answer: `${COURSE_MONTHS} months, following the ${LEVEL_COUNT} + ${CERTIFICATION_MONTHS} formula: ${LEVEL_COUNT} months of classes, one ${WEEKS_PER_LEVEL}-week level a month, to reach ${FINAL_CEFR}, and a month ${COURSE_MONTHS} devoted to your final assessment and your Cambridge preparation.`,
       },
       {
         question: 'How much does it cost?',
@@ -210,8 +260,16 @@ const en: Dictionary = {
       },
       {
         question: 'Do you issue a certificate?',
+        answer: `Yes. When you pass the month ${COURSE_MONTHS} exam you receive an institutional diploma issued by Centro de Idiomas del Valle CIVTU S.A.S. That same month we also prepare you, for free, for the Cambridge international exam at ${FINAL_CEFR} level.`,
+      },
+      {
+        question: `What happens in month ${COURSE_MONTHS}?`,
+        answer: `It is your certification bonus. You have finished the ${LEVEL_COUNT} levels, so that month is devoted entirely to your institutional final exam and to specialised preparation, at no cost, for the Cambridge ${FINAL_CEFR} exam.`,
+      },
+      {
+        question: 'Is the Cambridge exam included?',
         answer:
-          'Yes. When you finish you sit the certification exam and receive a diploma from Centro de Idiomas del Valle CIVTU S.A.S.',
+          'What we include for free is the preparation. You sit the official Cambridge exam at a Cambridge English authorised centre.',
       },
       {
         question: 'How do I enrol?',
@@ -230,7 +288,7 @@ const en: Dictionary = {
     ],
   },
   form: {
-    title: 'Ask for information',
+    title: 'Claim your free first month',
     lead: 'Leave your name, email and mobile number. An advisor will contact you to help you choose your program and schedule.',
     steps: ['You send your details', 'An advisor contacts you', 'You choose your schedule', 'You start your free first month'],
     alt: 'Rather talk now?',

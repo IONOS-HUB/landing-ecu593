@@ -20,7 +20,9 @@ Marketing landing page that sells the English courses of **Ecu593 English** (Ecu
 
 ## Positioning
 
-- A structured path: every course is **12 levels × 4 weeks**, graded out of 10 (pass mark 7), with written and oral evaluation and a 25% absence limit.
+- **Core promise: the "12 + 1" program.** 12 months of study (12 levels × 4 weeks, to B2) plus **month 13, a certification bonus**: the final exam for the **institutional diploma** (a title of Centro de Idiomas del Valle CIVTU S.A.S. itself) and **free preparation for the Cambridge B2 international exam** (the main hook). Key message: "Te entregamos tu diploma institucional y te preparamos completamente GRATIS para tu certificación internacional de Cambridge."
+- Launch campaign **"Mes Gratis"**: the first month is free (`src/config/campaign.ts`).
+- A structured path: graded out of 10 (pass mark 7), with written and oral evaluation and a 25% absence limit.
 - The school runs its own management system: students and families have an account where they see grades, attendance and progress; one family account can hold several student profiles.
 - Ecuadorian identity carried in the brand: "593" is Ecuador's country code; the logo uses the flag's yellow, blue and red.
 
@@ -36,6 +38,9 @@ Marketing landing page that sells the English courses of **Ecu593 English** (Ecu
 - Language: English only on this landing. Audiences: kids, teens, adults.
 - Modality: in-person and online.
 - Copy in Spanish (Ecuador), informal "tú".
+- **Never mention the Ministerio de Trabajo** or any government body: the company does not yet meet the 1-year minimum for that endorsement. The diploma is institutional.
+- **Never show the real teaching staff** (conflict of interest with their other employer). People in images are approved AI-generated images; videos use paid external models.
+- Only the Cambridge **preparation** is free; do not imply the official exam or its fee is included until the client confirms.
 - **Open decisions (do not invent):** prices, campus city/address, office hours, social links, class schedules per program, total hours, certification/diploma, group size (seed data says max 20 — unconfirmed), CEFR mapping of the 12 levels (PRD mentions A1–C1, not confirmed per level), production domain and API URL.
 
 ## Brand Commitments

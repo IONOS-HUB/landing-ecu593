@@ -11,6 +11,8 @@ export interface LeadInput {
   email: string;
   phone: string;
   program?: string;
+  /** Active campaign id (src/config/campaign.ts), e.g. "mes-gratis". */
+  campaign?: string;
 }
 
 export type LeadResult =
@@ -23,6 +25,7 @@ const toPayload = (input: LeadInput, lang: string) =>
     email: input.email.trim(),
     phone: input.phone.trim(),
     program: input.program?.trim() ?? '',
+    campaign: input.campaign ?? '',
     source: 'landing',
     lang,
     page: location.href,
