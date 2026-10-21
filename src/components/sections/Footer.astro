@@ -62,7 +62,14 @@ const year = new Date().getFullYear();
       )}
     </div>
 
-    <p class="legal">© {year} {site.legalName}. {t.footer.rights}</p>
+    <div class="legal">
+      <p>© {year} {site.legalName}. {t.footer.rights}</p>
+      <p class="watermark">
+        <a href="https://ionoshub.net/" target="_blank" rel="noopener">
+          Diseño y desarrollo: <span>IONOS HUB</span>
+        </a>
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -152,6 +159,26 @@ const year = new Date().getFullYear();
     border-top: 1.5px solid rgb(185 196 226 / 0.2);
     font-size: var(--step--1);
     color: var(--on-navy-soft);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .watermark {
+    margin: 0;
+  }
+  .watermark a {
+    color: var(--on-navy-soft);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .watermark a span {
+    color: var(--on-navy);
+    font-weight: 600;
+    transition: color 0.15s ease;
+  }
+  .watermark a:hover,
+  .watermark a:hover span {
+    color: var(--sun);
   }
 
   @media (max-width: 760px) {
